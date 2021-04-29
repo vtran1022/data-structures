@@ -4,48 +4,51 @@ var LinkedList = function() {
   list.tail = null;
 
   list.addToTail = function(value) {
-    if (list.head === undefined) {
-      list.head = Node(value);
-      list.tail = Node(value);
+    var newNode = Node(value);
+    if (list.head === null) {
+      list.head = newNode;
+      list.tail = newNode;
     } else {
-      list.head = list.tail;
-      list.tail = Node(value);
+      list.head.next = newNode;
+      list.tail = newNode;
     }
-
   };
 
   list.removeHead = function() {
     if (!list.head) {
       return;
     }
-    if (list.head === undefined) {
-      return;
-    }
-    // assign the tail value to a variable
+
     var firstHead = list.head.value;
-    var container = [];
-    container.push(firstHead);
-    // delete head value
     delete list.head;
+
     if (list.tail) {
       list.head = list.tail;
     }
-    // return the variable
-    // debugger;
 
-    return container[0];
+    return firstHead;
   };
 
   list.contains = function(target) {
-    // to check if both properties has the target value
-    if (list.head === target || list.tail === target) {
-    // if either has the target value
-      // return true
-      return true;
-    } else {
+    var currentNode = list.head;
+    if (currentNode === null) {
       return false;
     }
-    // return false
+
+    var innerFunction = function(currentNode) {
+      if (currentNode.value === target) {
+        return true;
+      } else {
+        if (currentNode.next === null) {
+          return false;
+        } else {
+          currentNode = currentNode.next;
+          return innerFunction(currentNode);
+        }
+      }
+    };
+
+    return innerFunction(currentNode);
   };
 
   return list;
