@@ -47,7 +47,6 @@ var LinkedList = function() {
         }
       }
     };
-
     return innerFunction(currentNode);
   };
 
